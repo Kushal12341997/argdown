@@ -4,7 +4,7 @@
 set -e
 
 # build
-npm run docs:buildall
+npm run build
 
 # navigate into the build output directory
 cd docs/.vuepress/dist
@@ -20,6 +20,7 @@ git commit -m 'deploy'
 # git push -f git@github.com:<USERNAME>/<USERNAME>.github.io.git master
 
 # if you are deploying to https://<USERNAME>.github.io/<REPO>
+# ToDo update username once code migration is done
 git push -f https://github.com/christianvoigt/argdown.git master:gh-pages
 
 cd -

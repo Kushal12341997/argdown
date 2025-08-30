@@ -2,10 +2,7 @@
   <nav class="sub-nav">
     <ul class="nav-list">
       <li>
-        <router-link to="/map/">Viz Js Map</router-link>
-      </li>
-      <li>
-        <router-link to="/map/dagre-d3">Dagre D3 Map</router-link>
+        <router-link to="/map/viz-js">Viz Js Map</router-link>
       </li>
       <li>
         <router-link to="/map/dot">Dot Source</router-link>
@@ -16,42 +13,88 @@
       <!-- <li><router-link to="/map/graphml">GraphML Source</router-link></li> -->
       <li
         class="save-map"
-        v-if="$route.name == 'map-viz-js' || $route.name == 'map-dagre-d3'"
+        v-if="$route.name == 'map-viz-js'"
       >
         save map as
         <a class="save-as-svg" v-on:click.stop.prevent="saveAsSvg" href>svg</a>
-        <a
-          class="save as png"
-          v-on:click.stop.prevent="$store.commit('openSaveAsPngDialog')"
-          href
-          >png</a
-        >
+                 <a
+           class="save as png"
+           v-on:click.stop.prevent="openSaveAsPngDialog"
+           href
+           >png</a
+         >
       </li>
     </ul>
-    <div class="save-as-png-dialog" v-if="$store.state.showSaveAsPngDialog">
-      <h3>PNG Export</h3>
-      <label for="save-as-png-scale">Scale</label>
-      <input
-        v-model="$store.state.pngScale"
-        type="number"
-        min="0"
-        max="100"
-        id="save-as-png-scale"
-      />
+         <div class="save-as-png-dialog" v-if="showSaveAsPngDialog">
+       <h3>PNG Export</h3>
+       <label for="save-as-png-scale">Scale</label>
+       <input
+         v-model="pngScale"
+         type="number"
+         min="0"
+         max="100"
+         id="save-as-png-scale"
+       />
       <div class="submit-cancel">
         <button type="button" v-on:click.prevent.stop="saveAsPng">
           Create PNG
         </button>
-        <button
-          type="button"
-          v-on:click.prevent.stop="$store.commit('closeSaveAsPngDialog')"
-        >
-          Cancel
-        </button>
+                 <button
+           type="button"
+           v-on:click.prevent.stop="closeSaveAsPngDialog"
+         >
+           Cancel
+         </button>
       </div>
     </div>
   </nav>
 </template>
+
+<script>
+import { computed } from 'vue';
+import { useRoute } from 'vue-router';
+import { useArgdownStore } from '../store.js';
+import { EventBus } from "../event-bus.js";
+
+export default {
+  setup() {
+    const route = useRoute();
+    const store = useArgdownStore();
+    
+    const currentRoute = computed(() => route);
+    const showSaveAsPngDialog = computed(() => store.showSaveAsPngDialog);
+    const pngScale = computed(() => store.pngScale);
+    
+    function saveAsSvg() {
+      EventBus.$emit("save-map-as-svg");
+    }
+    
+    function saveAsPng() {
+      EventBus.$emit("save-map-as-png");
+      store.closeSaveAsPngDialog();
+    }
+    
+    function openSaveAsPngDialog() {
+      store.openSaveAsPngDialog();
+    }
+    
+    function closeSaveAsPngDialog() {
+      store.closeSaveAsPngDialog();
+    }
+    
+    return {
+      currentRoute,
+      saveAsSvg,
+      saveAsPng,
+      openSaveAsPngDialog,
+      showSaveAsPngDialog,
+      pngScale,
+      closeSaveAsPngDialog
+    };
+  }
+};
+</script>
+
 <style lang="scss" scoped>
 .save-map {
   border-left: 1px solid #eee;
@@ -94,19 +137,3 @@
   }
 }
 </style>
-
-<script>
-import { EventBus } from "../event-bus.js";
-
-export default {
-  methods: {
-    saveAsSvg: function () {
-      EventBus.$emit("save-map-as-svg");
-    },
-    saveAsPng: function () {
-      EventBus.$emit("save-map-as-png");
-      this.$store.commit("closeSaveAsPngDialog");
-    },
-  },
-};
-</script>

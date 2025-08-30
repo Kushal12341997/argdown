@@ -30,7 +30,8 @@ const config = {
     // support reading TypeScript and JavaScript files, 📖 -> https://github.com/TypeStrong/ts-loader
     extensions: [".ts", ".js", ".mjs", ".cjs"],
     alias: {
-      "unicode-properties": "unicode-properties/unicode-properties.cjs.js",
+      "unicode-properties/dist/main.cjs": "unicode-properties",
+      "unicode-properties/unicode-properties.cjs.js": "unicode-properties",
       pdfkit: "pdfkit/js/pdfkit.js"
     },
     fallback: {
@@ -38,6 +39,8 @@ const config = {
       // see https://webpack.js.org/configuration/resolve/#resolvefallback
       // for the list of Node.js core module polyfills.
       assert: require.resolve("assert"),
+      vm: false, // assuming vm-browserify is not needed in this context, alternatively uncomment following line:
+      // vm: require.resolve("vm-browserify") // and add vm-browserify
       fs: false,
       stream: false,
       crypto: require.resolve("crypto-browserify"),
