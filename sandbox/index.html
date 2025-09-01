@@ -1,0 +1,26 @@
+<!doctype html><html><head><title>Sandbox | Argdown</title><meta name="description" content="Try out Argdown in your browser"/><link rel="shortcut icon" type="image/x-icon" href="https://argdown.org/favicon.ico"/><base href="/sandbox/"/><meta charset="utf-8"/><meta http-equiv="X-UA-Compatible" content="IE=edge"/><meta name="viewport" content="width=device-width,initial-scale=1"/><script>// Single Page Apps for GitHub Pages
+      // https://github.com/rafrex/spa-github-pages
+      // Copyright (c) 2016 Rafael Pedicini, licensed under the MIT License
+      // ----------------------------------------------------------------------
+      (function(l) {
+        if (l.search) {
+          var q = {};
+          l.search
+            .slice(1)
+            .split("&")
+            .forEach(function(v) {
+              var a = v.split("=");
+              q[a[0]] = a
+                .slice(1)
+                .join("=")
+                .replace(/~and~/g, "&");
+            });
+          if (q.p !== undefined) {
+            window.history.replaceState(
+              null,
+              null,
+              l.pathname.slice(0, -1) + (q.p || "") + (q.q ? "?" + q.q : "") + l.hash
+            );
+          }
+        }
+      })(window.location);</script><link rel="shortcut icon" href="/argdown/sandbox/favicon.ico"/><title>argdown</title><script defer="defer" src="/argdown/sandbox/js/chunk-vendors.0cdf204b.js" type="module"></script><script defer="defer" src="/argdown/sandbox/js/app.d0455a6f.js" type="module"></script><link href="/argdown/sandbox/css/app.c882a4d5.css" rel="stylesheet"><script defer="defer" src="/argdown/sandbox/js/chunk-vendors-legacy.0cdf204b.js" nomodule></script><script defer="defer" src="/argdown/sandbox/js/app-legacy.3d971055.js" nomodule></script></head><body><noscript><strong>Argdown Sandbox is a browser-based editor for the Argdown argumentation syntax. Please enable JavaScript to continue.</strong></noscript><div id="app"></div></body></html>
